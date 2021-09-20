@@ -19,14 +19,13 @@ export default {
 
     onMounted(() => {
       let url = "/jiandan/api/v1/comment/list/26402"
-      axios.get(url)
-          .then((response) => {
-            console.log("无聊图列表：",response.data)
-            boringPicObj.value = response.data.data
-          })
-          .catch((error) => {
-            console.log(error);
-          })
+      // axios.get(url)
+      //     .then((response) => {
+      //       boringPicObj.value = response.data.data
+      //     })
+      //     .catch((error) => {
+      //       console.log(error);
+      //     })
     })
 
     return {

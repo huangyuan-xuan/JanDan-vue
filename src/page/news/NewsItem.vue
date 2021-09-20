@@ -40,7 +40,6 @@ export default {
 
 
     const newsObject = reactive(props.news)
-    console.log(props.news.custom_fields.thumb_c[0]);
     const timeStr = computed(() => {
       let strTime = newsObject.date
       let date = new Date(strTime.replace(/-/g, '/'));

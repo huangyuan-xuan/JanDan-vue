@@ -1,50 +1,59 @@
 <template>
-<div id="popularity">
-  <p v-for="item in data" class="popularity-item" :key="item.id">
-    <label>{{item.content}}</label>
-  </p>
+  <div
 
-</div>
+      v-infinite-scroll="loadMore"
+      class="popularity"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="10">
+    <p v-for="item in popularityList" class="popularity-item" :key="item.id">
+      <PopularityItem :item="item"></PopularityItem>
+    </p>
+
+  </div>
 </template>
 
 <script>
-import {onMounted, ref} from "vue";
-import axios from "axios";
+import PopularityService from '../../service/popularity'
+import PopularityItem from "./PopularityItem";
 
 export default {
   name: "Popularity",
-  setup(){
-
-    let data = ref([])
-    onMounted(()=>{
-      let url = "/jiandan/api/v1/comment/list/102312"
-      axios.get(url)
-      .then((response)=>{
-        console.log("树洞列表：",response.data)
-        data.value = response.data.data
-      })
-      .catch((error)=>{
-        console.log(error)
-      })
-    })
+  components: {PopularityItem},
+  data() {
     return {
-      data
+      startID: 0,
+      popularityList: [],
+      loading: false
     }
-
-
-
+  },
+  mounted() {
+    this.loadPopularity(false)
+  },
+  methods: {
+    async loadPopularity(isLoadMore) {
+      console.log("加载", isLoadMore)
+      this.loading = true
+      let result = []
+      if (isLoadMore) {
+        result = await PopularityService.getPopularityWithStartId(this.startID)
+        const tempPopularityList = result.data || [];
+        this.popularityList.push(...tempPopularityList)
+        this.startID = this.popularityList[this.popularityList.length - 1].id
+      } else {
+        result = await PopularityService.getPopularityDefault()
+        this.popularityList = result.data
+      }
+      this.loading = false
+      console.log("数量", this.popularityList.length)
+    },
+    loadMore() {
+      this.loadPopularity(true)
+    }
   }
+
 }
 </script>
 
-<style >
-#popularity{
-  width: 100%;
-  height: 100%;
+<style scoped>
 
-}
-.popularity-item label {
-  width: 100%;
-  white-space: pre-wrap;
-}
 </style>

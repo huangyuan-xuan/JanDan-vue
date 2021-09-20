@@ -25,16 +25,15 @@ export default {
 
     onMounted(()=>{
       let url = "/jiandan/api/v1/comment/list/108629"
-      axios.get(url)
-          .then((response)=>{
-            console.log("妹子图列表：",response.data)
-            content.value = response.data
-            picObj.value  = response.data.data
-
-          })
-          .catch((error)=>{
-            console.log(error)
-          })
+      // axios.get(url)
+      //     .then((response)=>{
+      //       content.value = response.data
+      //       picObj.value  = response.data.data
+      //
+      //     })
+      //     .catch((error)=>{
+      //       console.log(error)
+      //     })
     })
 
 

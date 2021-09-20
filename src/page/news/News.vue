@@ -1,7 +1,6 @@
 <template>
   <div id="news"
        v-infinite-scroll="loadMore"
-       class="product-list-page"
        infinite-scroll-disabled="loading"
        infinite-scroll-distance="10">
     <div class="news-item">
@@ -52,7 +51,7 @@ export default {
           const tempNews = res.posts || [];
           this.news.push(...tempNews)
         }
-        console.log(this.news.length);
+
       } else {
         this.showError('请求出错')
       }
