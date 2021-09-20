@@ -1,6 +1,6 @@
 <template>
   <div id="boring">
-    <p v-for="item in boringPicObj" class="boring-item">
+    <p v-for="item in boringPicObj" class="boring-item" :key="item.id">
       <img  :src="item.images[0].url">
     </p>
 

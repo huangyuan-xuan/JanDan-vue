@@ -1,7 +1,7 @@
 <template>
 <div id="girls">
 
-    <div class="pic-item" v-for="(item , index) in picObj">
+    <div class="pic-item" v-for="(item) in picObj" :key="item.id">
 
       <img :src="item.images[0].url">
     </div>

@@ -1,6 +1,6 @@
 <template>
 <div id="popularity">
-  <p v-for="item in data" class="popularity-item">
+  <p v-for="item in data" class="popularity-item" :key="item.id">
     <label>{{item.content}}</label>
   </p>
 

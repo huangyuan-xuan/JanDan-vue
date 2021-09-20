@@ -1,22 +1,29 @@
 <template>
+  <div class="safe-area">
+    <div class="news">
+      <div class="main">
 
-  <el-row :gutter="20">
-    <el-col :span="16">
-      <div>
-        <label class="title">{{ newsObject.title }}</label>
-      </div>
-      <div class="sub-info">
-        <div class="author"><div class="author-child">{{ newsObject.author.name }}</div></div>
-        <div class="commont"> <div class="commont-child">{{ newsObject.comment_count }}评论</div></div>
-        <div class="time"> <div class="time-child">{{ timeStr }}</div></div>
-      </div>
-    </el-col>
-    <el-col :span="8">
-      <el-image class="news-image" :src="newsObject.custom_fields.thumb_c[0]" ></el-image>
-    </el-col>
-  </el-row>
-  <el-divider  v-show="!lastOne"></el-divider>
+        <div class="title">
+          {{ newsObject.title }}
+        </div>
 
+        <div class="bottom-row">
+          <div class="author">{{ newsObject.author.name }}</div>
+
+          <div class="comments-number">{{ newsObject.comment_count }}评论</div>
+
+          <div class="post-time">
+            {{ timeStr }}
+          </div>
+        </div>
+      </div>
+      <div class="image">
+<!--        <img v-lazy="newsObject.custom_fields.thumb_c[0]" alt=""/>-->
+        <el-image class="news-img" :src="newsObject.custom_fields.thumb_c[0]" lazy> <template #error><img src="../../assets/images/image_load_fail.svg"></template></el-image>
+      </div>
+    </div>
+  <div class="divider" v-show="!lastOne"></div>
+  </div>
 
 </template>
 
@@ -27,13 +34,13 @@ export default {
   name: "NewsItem",
   props: {
     news: Object,
-    lastOne:Boolean
+    lastOne: Boolean
   },
   setup(props) {
 
 
     const newsObject = reactive(props.news)
-
+    console.log(props.news.custom_fields.thumb_c[0]);
     const timeStr = computed(() => {
       let strTime = newsObject.date
       let date = new Date(strTime.replace(/-/g, '/'));
@@ -72,70 +79,76 @@ export default {
 </script>
 
 <style scoped>
+.safe-area {
+  display: flex;
+  flex-direction: column;
+}
+
+.news {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+}
+
+.news-img {
+  width: 120px;
+  height: 90px;
+}
+.news-img img{
+  width: 120px;
+  height: 90px;
+}
 
 .title {
+
+  font-size: 16px;
+  line-height: 17px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  font-size: large;
   color: #333333;
+
 }
 
 .author {
-  flex:1;
-  font-size: medium;
-  color: #666666;
-  position: relative;
-}
-.author-child{
-  position: absolute;
-  bottom: 8px;
-  left: 0;
+  font-size: 14px;
+  line-height: 15px;
+  align-self: baseline;
 }
 
-.commont {
-  flex: 2;
-  font-size: medium;
-  color: #666666;
-  margin-left: 10px;
-  position: relative;
-}
-.commont-child{
-  position: absolute;
-  bottom: 8px;
-  left: 0;
-
+.comments-number {
+  display: inline-block;
+  padding-right: 5px;
+  font-size: 14px;
 }
 
-
-.time {
-  flex: 3;
-  font-size: medium;
-  color: #666666;
-  margin-left: 10px;
-  position: relative;
-
-}
-.time-child{
-  position: absolute;
-  bottom: 8px;
-  right: 16px;
+.post-time {
+  align-self: baseline;
+  max-width: 50%;
+  font-size: 14px;
+  padding-right: 5px;
 }
 
-.news-image {
-  width: 160px;
-  height: 90px;
-  vertical-align: center;
-  margin-top: 10px;
-}
-
-.sub-info {
-  height: 100%;
-  position: relative;
+.bottom-row {
   display: flex;
-
+  justify-content: space-between;
 }
+
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 2px 0;
+}
+.divider{
+  height: 1px;
+  background: #999999;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 </style>

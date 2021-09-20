@@ -1,42 +1,37 @@
 <template>
   <router-view></router-view>
 
-  <el-container>
-    <el-main>
-      <div class="container">
-        <News v-show="active==='news'"></News>
-        <Popularity v-show="active==='popularity'"></Popularity>
-        <Boring v-show="active==='boring'"></Boring>
-        <Girls v-show="active==='girls'"></Girls>
+  <div>
+    <div class="container">
+      <News v-show="active==='news'"></News>
+      <Popularity v-show="active==='popularity'"></Popularity>
+      <Boring v-show="active==='boring'"></Boring>
+      <Girls v-show="active==='girls'"></Girls>
+    </div>
+    <div class="bottom-nav">
+      <div class="bottom-nav-item" @click="updateActive('news')">
+        <img src="./assets/images/tab-item-icon/home_normal.svg" v-show="active!=='news'"/>
+        <img src="./assets/images/tab-item-icon/home_checked.svg" v-show="active==='news'"/>
+        <div>新鲜事</div>
       </div>
-    </el-main>
-    <el-footer>
-      <div class="bottom-nav">
-        <div class="bottom-nav-item" @click="updateActive('news')">
-          <img src="./assets/images/tab-item-icon/home_normal.svg" v-show="active!=='news'"/>
-          <img src="./assets/images/tab-item-icon/home_checked.svg" v-show="active==='news'"/>
-          <div>新鲜事</div>
-        </div>
-        <div class="bottom-nav-item" @click="updateActive('popularity')">
-          <img src="./assets/images/tab-item-icon/course_normal.svg" v-show="active!=='popularity'"/>
-          <img src="./assets/images/tab-item-icon/course_checked.svg" v-show="active==='popularity'"/>
-          <div>树洞</div>
-        </div>
-        <div class="bottom-nav-item" @click="updateActive('boring')">
-          <img src="./assets/images/tab-item-icon/friend_normal.svg" v-show="active!=='boring'"/>
-          <img src="./assets/images/tab-item-icon/friend_checked.svg" v-show="active==='boring'"/>
-          <div>无聊图</div>
-        </div>
-        <div class="bottom-nav-item" @click="updateActive('girls')">
-          <img src="./assets/images/tab-item-icon/study_normal.svg" v-show="active!=='girls'"/>
-          <img src="./assets/images/tab-item-icon/study_checked.svg" v-show="active==='girls'"/>
-          <div>妹子图</div>
-        </div>
+      <div class="bottom-nav-item" @click="updateActive('popularity')">
+        <img src="./assets/images/tab-item-icon/course_normal.svg" v-show="active!=='popularity'"/>
+        <img src="./assets/images/tab-item-icon/course_checked.svg" v-show="active==='popularity'"/>
+        <div>树洞</div>
       </div>
-    </el-footer>
+      <div class="bottom-nav-item" @click="updateActive('boring')">
+        <img src="./assets/images/tab-item-icon/friend_normal.svg" v-show="active!=='boring'"/>
+        <img src="./assets/images/tab-item-icon/friend_checked.svg" v-show="active==='boring'"/>
+        <div>无聊图</div>
+      </div>
+      <div class="bottom-nav-item" @click="updateActive('girls')">
+        <img src="./assets/images/tab-item-icon/study_normal.svg" v-show="active!=='girls'"/>
+        <img src="./assets/images/tab-item-icon/study_checked.svg" v-show="active==='girls'"/>
+        <div>妹子图</div>
+      </div>
+    </div>
 
-
-  </el-container>
+  </div>
 
 </template>
 
@@ -72,7 +67,9 @@ export default {
 
 <style>
 @import "./assets/css/common.css";
-
+.container{
+  padding-bottom: 90px;
+}
 
 .bottom-nav {
   flex: 1;

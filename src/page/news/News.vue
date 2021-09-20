@@ -1,7 +1,11 @@
 <template>
-  <div id="news">
+  <div id="news"
+       v-infinite-scroll="loadMore"
+       class="product-list-page"
+       infinite-scroll-disabled="loading"
+       infinite-scroll-distance="10">
     <div class="news-item">
-      <NewsItem v-for="(item,index) in news"  :last-one="index===news.length-1" :news="item" :key="index"></NewsItem>
+      <NewsItem v-for="(item,index) in news" :last-one="index===news.length-1" :news="item" :key="index"></NewsItem>
     </div>
 
   </div>
@@ -9,38 +13,57 @@
 
 <script>
 
-import axios from "axios";
-import {onMounted} from "vue";
-import {ref} from "vue";
+
 import NewsItem from "./NewsItem";
+import {ElMessage} from 'element-plus'
+import NewsService from '../../service/news'
 
 export default {
   name: "News",
   components: {NewsItem},
-  setup() {
 
-    let news = ref([])
-
-    onMounted(() => {
-      console.log("news onMounted")
-
-      let url = "/news_api/?oxwlxojflwblxbsapi=get_recent_posts&include=url,date,tags,author,title,excerpt,comment_count,comment_status,custom_fields&custom_fields=thumb_c,views&dev=1"
-      axios.get(url)
-          .then((response) => {
-            console.log("新鲜事列表：",response.data)
-            news.value = response.data.posts
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-
-    })
+  data() {
     return {
-      news,
-      NewsItem
+      pageNumber: 1,
+      news: [],
+      loading: false
     }
+  },
+  mounted() {
+    this.loadNewsList(false)
+  },
+
+  methods: {
+    async loadNewsList(isLoadMore) {
+
+      this.loading = true
+      if (isLoadMore) {
+        this.pageNumber += 1;
+      } else {
+        this.pageNumber = 1;
+      }
+      const res = await NewsService.getNewsList(this.pageNumber)
 
 
+      if (res.status === 'ok') {
+        if (this.pageNumber === 1) {
+          this.news = res.posts
+        } else {
+          const tempNews = res.posts || [];
+          this.news.push(...tempNews)
+        }
+        console.log(this.news.length);
+      } else {
+        this.showError('请求出错')
+      }
+      this.loading = false
+    },
+    showError(messge) {
+      ElMessage.error(messge)
+    },
+    loadMore() {
+      this.loadNewsList(true)
+    }
   }
 
 
@@ -48,13 +71,6 @@ export default {
 </script>
 
 <style>
-#news {
-  width: 100%;
-  height: 100%;
-}
 
-.pic-item img {
-  width: 100%;
-}
 
 </style>
