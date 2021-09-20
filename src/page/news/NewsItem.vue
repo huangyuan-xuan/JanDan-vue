@@ -18,7 +18,6 @@
         </div>
       </div>
       <div class="image">
-<!--        <img v-lazy="newsObject.custom_fields.thumb_c[0]" alt=""/>-->
         <el-image class="news-img" :src="newsObject.custom_fields.thumb_c[0]" lazy> <template #error><img src="../../assets/images/image_load_fail.svg"></template></el-image>
       </div>
     </div>

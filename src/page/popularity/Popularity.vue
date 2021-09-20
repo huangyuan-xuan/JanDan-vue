@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     async loadPopularity(isLoadMore) {
-      console.log("加载", isLoadMore)
+
       this.loading = true
       let result = []
       if (isLoadMore) {
@@ -44,7 +44,7 @@ export default {
         this.popularityList = result.data
       }
       this.loading = false
-      console.log("数量", this.popularityList.length)
+
     },
     loadMore() {
       this.loadPopularity(true)
