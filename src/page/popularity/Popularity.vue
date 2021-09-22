@@ -1,15 +1,19 @@
 <template>
-  <div
+  <var-list
+      loading-text="正在努力输出"
+      finished-text="一滴都没有了"
+      error-text="出错了出错了"
+      :finished="hasMore"
+      v-model:loading="loading"
+      @load="loadMore">
 
-      v-infinite-scroll="loadMore"
-      class="popularity"
-      infinite-scroll-disabled="loading"
-      infinite-scroll-distance="10">
-    <p v-for="item in popularityList" class="popularity-item" :key="item.id">
+    <var-cell  v-for="item in popularityList" class="popularity-item" :key="item.id">
       <PopularityItem :item="item"></PopularityItem>
-    </p>
+    </var-cell>
 
-  </div>
+  </var-list>
+
+
 </template>
 
 <script>
@@ -23,7 +27,8 @@ export default {
     return {
       startID: 0,
       popularityList: [],
-      loading: false
+      loading: false,
+      hasMore: true,
     }
   },
   mounted() {
@@ -31,7 +36,6 @@ export default {
   },
   methods: {
     async loadPopularity(isLoadMore) {
-
       this.loading = true
       let result = []
       if (isLoadMore) {

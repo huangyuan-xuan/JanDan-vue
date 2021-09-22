@@ -2,7 +2,6 @@
   <div class="safe-area">
     <div class="news">
       <div class="main">
-
         <div class="title">
           {{ newsObject.title }}
         </div>
@@ -18,7 +17,7 @@
         </div>
       </div>
       <div class="image">
-        <el-image class="news-img" :src="newsObject.custom_fields.thumb_c[0]" lazy> <template #error><img src="../../assets/images/image_load_fail.svg"></template></el-image>
+        <var-image class="news-img" :src="newsObject.custom_fields.thumb_c[0]" :error=logo lazy/>
       </div>
     </div>
   <div class="divider" v-show="!lastOne"></div>
@@ -28,7 +27,7 @@
 
 <script>
 import {computed, reactive} from "vue";
-
+import logo from '../../assets/images/image_load_fail.svg'
 export default {
   name: "NewsItem",
   props: {
@@ -70,7 +69,8 @@ export default {
 
     return {
       newsObject,
-      timeStr
+      timeStr,
+      logo
     }
   }
 }
@@ -98,7 +98,6 @@ export default {
 }
 
 .title {
-
   font-size: 16px;
   line-height: 17px;
   overflow: hidden;
@@ -107,7 +106,6 @@ export default {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   color: #333333;
-
 }
 
 .author {

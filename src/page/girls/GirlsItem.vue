@@ -14,10 +14,8 @@
 </template>
 
 <script>
-
-
 export default {
-  name: "BoringItem",
+  name: "GirlsItem",
   props: {
     item: Object
   },
@@ -26,7 +24,6 @@ export default {
       return this.item.content.replaceAll("#img#", "")
     }
   }
-
 }
 </script>
 

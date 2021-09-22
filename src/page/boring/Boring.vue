@@ -1,34 +1,38 @@
 <template>
-  <div id="boring"
-       v-infinite-scroll="loadMore"
-       class="popularity"
-       infinite-scroll-disabled="loading"
-       infinite-scroll-distance="10">
-
-    <p v-for="item in boringList" class="boring-item" :key="item.id">
+  <var-list
+      loading-text="正在努力输出"
+      finished-text="一滴都没有了"
+      error-text="出错了出错了"
+      :finished="hasMore"
+      v-model:loading="loading"
+      @load="loadMore">
+    <var-cell v-for="item in boringList" class="boring-item" :key="item.id">
       <BoringItem :item="item"></BoringItem>
-    </p>
+    </var-cell>
+  </var-list>
 
-  </div>
 </template>
 
 <script>
 
 import BoringItem from "./BoringItem";
 import BoringService from '../../service/boring'
+
 export default {
   name: "Boring",
-  components:{BoringItem},
-  data(){
+  components: {BoringItem},
+  data() {
     return {
-      boringList:[],
-      loading:false,
-      startID:0
+      boringList: [],
+      loading: false,
+      startID: 0,
+      hasMore: true
     }
   },
   mounted() {
+    this.loadPopularity(false)
   },
-  methods:{
+  methods: {
     async loadPopularity(isLoadMore) {
 
       this.loading = true
@@ -38,9 +42,11 @@ export default {
         const tempPopularityList = result.data || [];
         this.boringList.push(...tempPopularityList)
         this.startID = this.boringList[this.boringList.length - 1].id
+        console.log("加载更多",result.data)
       } else {
         result = await BoringService.getBoringDefault()
         this.boringList = result.data
+        console.log("初始加载",result.data)
       }
       this.loading = false
 
@@ -53,12 +59,6 @@ export default {
 </script>
 
 <style>
-#boring {
-  width: 100%;
-  height: 100%;
-
-}
-
 .boring-item img {
   width: 100%;
 }

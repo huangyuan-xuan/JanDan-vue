@@ -1,14 +1,17 @@
 <template>
-
-  <el-card>
-    <label>{{item.content}}</label>
+  <var-card
+      title="测试"
+      :subtitle="item.content">
+    <template #extra>
     <div class="footer-row">
       <div>OO{{item.vote_positive}}</div>
       <div>XX{{item.vote_negative}}</div>
       <div>吐槽{{item.sub_comment_count}}</div>
       <div>...</div>
     </div>
-  </el-card>
+    </template>
+  </var-card>
+
 </template>
 
 <script>
@@ -16,6 +19,8 @@ export default {
   name: "PopularityItem",
   props:{
     item:Object
+  },
+  computed:{
   }
 }
 </script>
