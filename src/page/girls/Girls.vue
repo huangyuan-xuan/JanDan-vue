@@ -1,21 +1,18 @@
 <template>
-  <div id="girls">
+  <var-pull-refresh v-model="isRefresh" @refresh="refresh">
     <var-list
-        loading-text="正在努力输出"
-        finished-text="一滴都没有了"
-        error-text="出错了出错了"
+        loading-text="正在加载"
+        finished-text="已经没有了"
+        error-text="出错了"
         :finished="hasMore"
-        v-model:loading="loading"
+        :loading="loading"
         @load="loadMore">
-
       <var-cell v-for="item in girlsList" class="boring-item" :key="item.id">
         <GirlsItem :item="item"></GirlsItem>
       </var-cell>
 
     </var-list>
-
-
-  </div>
+</var-pull-refresh>
 </template>
 
 <script>
@@ -33,11 +30,12 @@ export default {
       girlsList: [],
       loading: false,
       startID: 0,
-      hasMore: true
+      hasMore: true,
+      isRefresh:false
     }
   },
   mounted() {
-    this.loadGirlsPic(false)
+    this.refresh()
   },
 
   methods: {
@@ -55,10 +53,15 @@ export default {
         this.girlsList = result.data
       }
       this.loading = false
+      this.isRefresh = false
+      this.hasMore = (this.girlsList < result.count_total)
 
     },
     loadMore() {
-      this.loadPopularity(true)
+      this.loadGirlsPic(true)
+    },
+    refresh(){
+      this.loadGirlsPic(false)
     }
   }
 

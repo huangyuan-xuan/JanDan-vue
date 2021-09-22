@@ -1,17 +1,19 @@
 <template>
-  <var-list
-      loading-text="正在努力输出"
-      finished-text="一滴都没有了"
-      error-text="出错了出错了"
-      :finished="hasMore"
-      v-model:loading="loading"
-      @load="loadMore">
+  <var-pull-refresh v-model="isRefresh" @refresh="refresh">
+    <var-list
+        loading-text="正在加载"
+        finished-text="已经没有了"
+        error-text="出错了"
+        :finished="hasMore"
+        :error="error"
+        :loading="loading"
+        @load="loadMore">
+      <var-cell v-for="(item,index) in news" :key="index">
+        <NewsItem :news="item" :key="index" :last-one="index===news.length-1"></NewsItem>
+      </var-cell>
 
-    <var-cell v-for="(item,index) in news" :key="index">
-      <NewsItem :news="item" :key="index" :last-one="index===news.length-1"></NewsItem>
-    </var-cell>
-
-  </var-list>
+    </var-list>
+  </var-pull-refresh>
 
 
 </template>
@@ -21,6 +23,7 @@
 
 import NewsItem from "./NewsItem";
 import NewsService from '../../service/news'
+
 export default {
   name: "News",
   components: {
@@ -32,12 +35,13 @@ export default {
       pageNumber: 1,
       news: [],
       loading: false,
-      hasMore:true,
-
+      hasMore: true,
+      isRefresh: false,
+      error:false
     }
   },
   mounted() {
-    this.loadNewsList(false)
+    this.refresh()
   },
 
   methods: {
@@ -50,8 +54,6 @@ export default {
         this.pageNumber = 1;
       }
       const res = await NewsService.getNewsList(this.pageNumber)
-
-
       if (res.status === 'ok') {
         if (this.pageNumber === 1) {
           this.news = res.posts
@@ -60,12 +62,19 @@ export default {
           this.news.push(...tempNews)
         }
       } else {
-       console.log("加载出错")
+        this.error = true
+        console.log("加载出错")
       }
       this.loading = false
+      this.isRefresh = false
+      this.hasMore = (this.news < res.count_total)
+
     },
     loadMore() {
       this.loadNewsList(true)
+    },
+    refresh() {
+      this.loadNewsList(false)
     }
   }
 
