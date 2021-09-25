@@ -7,12 +7,10 @@
         :finished="hasMore"
         :loading="loading"
         @load="loadMore">
-      <var-cell v-for="item in girlsList" class="boring-item" :key="item.id">
-        <GirlsItem :item="item"></GirlsItem>
-      </var-cell>
-
+        <GirlsItem v-for="item in girlsList" class="boring-item" :key="item.id" :item="item"></GirlsItem>
     </var-list>
 </var-pull-refresh>
+
 </template>
 
 <script>
@@ -31,7 +29,9 @@ export default {
       loading: false,
       startID: 0,
       hasMore: true,
-      isRefresh:false
+      isRefresh:false,
+      images:[],
+      closeShow:false
     }
   },
   mounted() {
@@ -62,6 +62,12 @@ export default {
     },
     refresh(){
       this.loadGirlsPic(false)
+    },
+    doSomething(imgs){
+      console.log("imgs:" ,imgs)
+      this.images=imgs
+      this.closeShow = true
+
     }
   }
 

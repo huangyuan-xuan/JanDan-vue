@@ -1,10 +1,9 @@
 <template>
-  <!--  <router-view></router-view>-->
-
+    <router-view></router-view>
   <var-tabs
       sticky
       elevation
-      color="#2979ff"
+      color="#000000"
       active-color="#fff"
       v-model:active="active"
       inactive-color="hsla(0, 0%, 100%, .6)">
@@ -24,7 +23,7 @@
       <Popularity></Popularity>
     </var-tab-item>
     <var-tab-item>
-     <Boring></Boring>
+      <Boring></Boring>
     </var-tab-item>
     <var-tab-item>
       <Girls></Girls>
@@ -53,10 +52,10 @@ export default {
   },
   data() {
     return {
-      active: 0
+      active: 0,
+
     }
   },
-
 }
 </script>
 

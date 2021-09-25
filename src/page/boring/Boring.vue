@@ -1,16 +1,14 @@
 <template>
   <var-pull-refresh v-model="isRefresh" @refresh="refresh">
-  <var-list
-      loading-text="正在加载"
-      finished-text="已经没有了"
-      error-text="出错了"
-      :finished="hasMore"
-      :loading="loading"
-      @load="loadMore">
-    <var-cell v-for="item in boringList" class="boring-item" :key="item.id">
-      <BoringItem :item="item"></BoringItem>
-    </var-cell>
-  </var-list>
+    <var-list
+        loading-text="正在加载"
+        finished-text="已经没有了"
+        error-text="出错了"
+        :finished="hasMore"
+        :loading="loading"
+        @load="loadMore">
+      <BoringItem v-for="item in boringList" class="boring-item" :key="item.id" :item="item"></BoringItem>
+    </var-list>
   </var-pull-refresh>
 
 </template>
@@ -29,7 +27,7 @@ export default {
       loading: false,
       startID: 0,
       hasMore: true,
-      isRefresh:false
+      isRefresh: false
     }
   },
   mounted() {
@@ -45,11 +43,10 @@ export default {
         const tempPopularityList = result.data || [];
         this.boringList.push(...tempPopularityList)
         this.startID = this.boringList[this.boringList.length - 1].id
-        console.log("加载更多",result.data)
+        console.log("加载更多", result.data)
       } else {
         result = await BoringService.getBoringDefault()
         this.boringList = result.data
-        console.log("初始加载",result.data)
       }
       this.loading = false
       this.isRefresh = false
@@ -59,7 +56,7 @@ export default {
     loadMore() {
       this.loadPopularity(true)
     },
-    refresh(){
+    refresh() {
       this.loadPopularity(false)
     }
   }

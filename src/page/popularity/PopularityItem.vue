@@ -1,32 +1,40 @@
 <template>
-  <var-card
-      title="测试"
-      :subtitle="item.content">
-    <template #extra>
-    <div class="footer-row">
-      <div>OO{{item.vote_positive}}</div>
-      <div>XX{{item.vote_negative}}</div>
-      <div>吐槽{{item.sub_comment_count}}</div>
-      <div>...</div>
-    </div>
-    </template>
-  </var-card>
+  <div class="safe-area">
+    <div class="var-elevation--3">
+      <div>
+        {{ item.content }}
+      </div>
 
+      <div class="footer-row">
+        <div>OO{{ item.vote_positive }}</div>
+        <div>XX{{ item.vote_negative }}</div>
+        <div>吐槽{{ item.sub_comment_count }}</div>
+        <div>...</div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   name: "PopularityItem",
-  props:{
-    item:Object
+  props: {
+    item: Object
   },
-  computed:{
-  }
+  computed: {}
 }
 </script>
 
 <style scoped>
-.footer-row{
+.safe-area {
+
+}
+.var-elevation--3{
+  padding: 10px;
+  margin: 6px;
+}
+
+.footer-row {
   margin-top: 10px;
   display: flex;
   justify-content: space-between;

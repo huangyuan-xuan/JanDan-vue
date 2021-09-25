@@ -8,9 +8,7 @@
       :loading="loading"
       @load="loadMore">
 
-    <var-cell  v-for="item in popularityList" class="popularity-item" :key="item.id">
-      <PopularityItem :item="item"></PopularityItem>
-    </var-cell>
+      <PopularityItem v-for="item in popularityList" class="popularity-item" :key="item.id" :item="item" ></PopularityItem>
 
   </var-list>
   </var-pull-refresh>

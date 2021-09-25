@@ -1,4 +1,5 @@
 <template>
+
   <div class="safe-area">
     <div class="news">
       <div class="main">
@@ -22,6 +23,7 @@
     </div>
   <div class="divider" v-show="!lastOne"></div>
   </div>
+
 
 </template>
 
@@ -80,6 +82,7 @@ export default {
 .safe-area {
   display: flex;
   flex-direction: column;
+  padding: 4px;
 }
 
 .news {

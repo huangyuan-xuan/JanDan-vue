@@ -8,9 +8,9 @@
         :error="error"
         :loading="loading"
         @load="loadMore">
-      <var-cell v-for="(item,index) in news" :key="index">
-        <NewsItem :news="item" :key="index" :last-one="index===news.length-1"></NewsItem>
-      </var-cell>
+
+        <NewsItem v-for="(item,index) in news" :news="item" :key="index" :last-one="index===news.length-1"></NewsItem>
+
 
     </var-list>
   </var-pull-refresh>
