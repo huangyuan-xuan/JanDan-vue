@@ -9,7 +9,7 @@
         <div @click="votePositive">OO[{{ getVotePositive }}]</div>
         <div @click="voteNegative">XX[{{ getVoteNegative }}]</div>
         <div @click="showPopUp = true">吐槽[{{ getCommentCount }}]</div>
-        <div>...</div>
+        <div></div>
       </div>
     </div>
   </div>
