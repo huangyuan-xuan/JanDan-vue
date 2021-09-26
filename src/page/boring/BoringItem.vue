@@ -9,21 +9,21 @@
       <div @click="votePositive">OO[{{ getVotePositive }}]</div>
       <div @click="voteNegative">XX[{{ getVoteNegative }}]</div>
       <div @click="showPopUp = true">吐槽[{{ getCommentCount }}]</div>
-      <div v-show="showMultiImageTag">多图</div>
+      <div v-show="showMultiImageTag" @click="showImagePreview">多图</div>
       <div v-show="!showMultiImageTag"></div>
     </div>
 
 
   </div>
   <teleport to="body">
-  <var-dialog v-model:show="showPopUp" @confirm="onConfirm" @closed="onClosed">
-    <input type="text" placeholder="昵称" v-model="commentName">
-    <input type="email" placeholder="邮箱" v-model="commentEmail">
-    <input type="text" placeholder="评论" v-model="commentContent">
-  </var-dialog>
+    <var-dialog v-model:show="showPopUp" @confirm="onConfirm" @closed="onClosed">
+      <input type="text" placeholder="昵称" v-model="commentName">
+      <input type="email" placeholder="邮箱" v-model="commentEmail">
+      <input type="text" placeholder="评论" v-model="commentContent">
+    </var-dialog>
   </teleport>
   <teleport to="body">
-    <var-snackbar v-model:show="showSnackbar" position="bottom">
+    <var-snackbar v-model:show="showSnackbar" position="center" type="info">
       {{ snackbarContent }}
     </var-snackbar>
   </teleport>
@@ -107,9 +107,9 @@ export default {
       console.log(voteResult)
       if (voteResult && voteResult.error === 0) {
         this.votePos = true
-        this.showSnackbarWithContent( "赞成成功")
+        this.showSnackbarWithContent("赞成成功")
       } else {
-        this.showSnackbarWithContent( voteResult.msg)
+        this.showSnackbarWithContent(voteResult.msg)
       }
     },
     async voteNegative() {
@@ -117,9 +117,9 @@ export default {
       console.log(voteResult)
       if (voteResult && voteResult.error === 0) {
         this.voteNeg = true
-        this.showSnackbarWithContent( "反对成功")
+        this.showSnackbarWithContent("反对成功")
       } else {
-        this.showSnackbarWithContent( voteResult.msg)
+        this.showSnackbarWithContent(voteResult.msg)
       }
     },
     async postComment(data) {

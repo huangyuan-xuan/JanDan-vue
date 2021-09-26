@@ -8,7 +8,7 @@
       :loading="loading"
       @load="loadMore">
 
-      <PopularityItem v-for="item in popularityList" class="popularity-item" :key="item.id" :item="item" ></PopularityItem>
+      <PopularityItem v-for="item in popularityList" :key="item.id" :item="item" ></PopularityItem>
 
   </var-list>
   </var-pull-refresh>

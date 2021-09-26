@@ -7,7 +7,7 @@
         :finished="hasMore"
         :loading="loading"
         @load="loadMore">
-        <GirlsItem v-for="item in girlsList" class="boring-item" :key="item.id" :item="item"></GirlsItem>
+        <GirlsItem v-for="item in girlsList" :key="item.id" :item="item"></GirlsItem>
     </var-list>
 </var-pull-refresh>
 
@@ -65,20 +65,11 @@ export default {
     refresh(){
       this.loadGirlsPic(false)
     },
-    doSomething(imgs){
-      console.log("imgs:" ,imgs)
-      this.images=imgs
-      this.closeShow = true
-
-    }
   }
 
 }
 </script>
 
-<style>
-#girls {
-  width: 100%;
-  height: 100%;
-}
+<style scoped>
+
 </style>
