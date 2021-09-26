@@ -2,7 +2,7 @@
   <var-pull-refresh v-model="isRefresh" @refresh="refresh">
     <var-list
         loading-text="正在加载"
-        finished-text="已经没有了"
+        :finished-text="finishedText"
         error-text="出错了"
         :finished="hasMore"
         :loading="loading"
@@ -31,7 +31,8 @@ export default {
       hasMore: true,
       isRefresh:false,
       images:[],
-      closeShow:false
+      closeShow:false,
+      finishedText:""
     }
   },
   mounted() {
@@ -52,6 +53,7 @@ export default {
         result = await GirlsService.getGirlsDefault()
         this.girlsList = result.data
       }
+      this.finishedText = "到底了"
       this.loading = false
       this.isRefresh = false
       this.hasMore = (this.girlsList < result.count_total)

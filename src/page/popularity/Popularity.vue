@@ -2,7 +2,7 @@
   <var-pull-refresh v-model="isRefresh" @refresh="refresh">
   <var-list
       loading-text="正在加载"
-      finished-text="已经没有了"
+      :finished-text="finishedText"
       error-text="出错了"
       :finished="hasMore"
       :loading="loading"
@@ -28,7 +28,8 @@ export default {
       popularityList: [],
       loading: false,
       hasMore: true,
-      isRefresh:false
+      isRefresh:false,
+      finishedText:""
     }
   },
   mounted() {
@@ -47,6 +48,7 @@ export default {
         result = await PopularityService.getPopularityDefault()
         this.popularityList = result.data
       }
+      this.finishedText = "finishedText"
       this.loading = false
       this.isRefresh = false
       this.hasMore = (this.popularityList < result.count_total)
