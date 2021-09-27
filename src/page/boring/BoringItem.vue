@@ -16,7 +16,7 @@
 
   </div>
   <teleport to="body">
-    <var-dialog v-model:show="showPopUp" @confirm="onConfirm" @closed="onClosed">
+    <var-dialog v-model:show="showPopUp" @before-close="beforeClose">
       <var-input type="text" :rules="[v => v.length > 0 || '请输入昵称']" placeholder="请输入昵称" v-model="commentName"/>
       <var-input type="text"
                  :rules="[v=>/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(v) || '邮箱格式不正确']"
@@ -136,57 +136,55 @@ export default {
         this.showSnackbarWithContent(commentResult.msg)
       }
     },
-    onConfirm() {
-      const data = {
-        author: this.commentName,
-        email: this.commentEmail,
-        content: this.commentContent,
-        comment_id: this.item.id,
-        comment_post_ID: this.item.post_id
+    beforeClose(action,done){
+      if(action==='confirm'){
+        const data = {
+          author: this.commentName,
+          email: this.commentEmail,
+          content: this.commentContent,
+          comment_id: this.item.id,
+          comment_post_ID: this.item.post_id
+        }
+        let that = this
+        if (!this.commentName && this.commentName.length === 0) {
+          Snackbar.error({
+            content: "昵称不能为空",
+            position: "center",
+            onClosed: () => {
+              that.showPopUp = true
+            }
+          })
+          return;
+        }
+
+        let emailReg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+
+        if (!emailReg.test(this.commentEmail)) {
+          Snackbar.error({
+            content: "邮箱格式不正确",
+            position: "center",
+          })
+          return
+        }
+
+        if (!this.commentContent && this.commentContent.length === 0) {
+          Snackbar.error({
+            content: "评论内容不能为空",
+            position: "center",
+            onClosed: () => {
+              that.showPopUp = true
+            }
+          })
+          return;
+        }
+
+        this.postComment(data)
       }
-      let that = this
-      if (!this.commentName && this.commentName.length === 0) {
-        Snackbar.error({
-          content: "昵称不能为空",
-          position: "center",
-          onClosed: () => {
-            that.showPopUp = true
-          }
-        })
-        return;
-      }
-
-
-      let reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
-
-      if (!reg.test(this.commentEmail)) {
-        Snackbar.error({
-          content: "邮箱格式不正确",
-          position: "center",
-          onClosed: () => {
-            that.showPopUp = true
-          }
-        })
-        return
-      }
-      if (!this.commentContent && this.commentContent.length === 0) {
-        Snackbar.error({
-          content: "评论内容不能为空",
-          position: "center",
-          onClosed: () => {
-            that.showPopUp = true
-          }
-        })
-        return;
-      }
-
-
-      this.postComment(data)
+      this.commentContent=''
+      done()
 
     },
-    onClosed() {
-      this.commentContent = ""
-    },
+
     showSnackbarWithContent(content) {
       if (content && content.length > 0) {
         this.snackbarContent = content
