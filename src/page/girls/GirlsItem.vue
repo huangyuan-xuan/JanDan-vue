@@ -14,9 +14,11 @@
   </div>
   <teleport to="body">
     <var-dialog v-model:show="showPopUp" @confirm="onConfirm" @closed="onClosed">
-      <input type="text" placeholder="昵称" v-model="commentName">
-      <input type="email" placeholder="邮箱" v-model="commentEmail">
-      <input type="text" placeholder="评论" v-model="commentContent">
+      <var-input type="text" :rules="[v => v.length > 0 || '请输入昵称']" placeholder="请输入昵称" v-model="commentName"/>
+      <var-input type="text"
+                 :rules="[v=>/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(v) || '邮箱格式不正确']"
+                 placeholder="请输入邮箱" v-model="commentEmail"/>
+      <var-input type="text" placeholder="请输入评论" v-model="commentContent" textarea/>
     </var-dialog>
   </teleport>
   <teleport to="body">
@@ -29,6 +31,7 @@
 <script>
 import logo from '../../assets/images/image_load_fail.svg'
 import GirlsService from "../../service/girls"
+import {Snackbar} from "@varlet/ui";
 
 
 
@@ -139,8 +142,45 @@ export default {
         comment_id: this.item.id,
         comment_post_ID: this.item.post_id
       }
+      let that = this
+      if (!this.commentName && this.commentName.length === 0) {
+        Snackbar.error({
+          content: "昵称不能为空",
+          position: "center",
+          onClosed: () => {
+            that.showPopUp = true
+          }
+        })
+        return;
+      }
+
+
+      let reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+
+      if (!reg.test(this.commentEmail)) {
+        Snackbar.error({
+          content: "邮箱格式不正确",
+          position: "center",
+          onClosed: () => {
+            that.showPopUp = true
+          }
+        })
+        return
+      }
+      if (!this.commentContent && this.commentContent.length === 0) {
+        Snackbar.error({
+          content: "评论内容不能为空",
+          position: "center",
+          onClosed: () => {
+            that.showPopUp = true
+          }
+        })
+        return;
+      }
+
 
       this.postComment(data)
+
     },
     onClosed() {
       this.commentContent = ""
