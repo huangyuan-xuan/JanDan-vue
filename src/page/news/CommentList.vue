@@ -16,15 +16,19 @@
   </var-app-bar>
   </var-sticky>
   <div class="container">
-
-
     <div class="hot-comment">热门评论</div>
     <CommentItem v-for="(item,index) in hotestCommentList" :key="item.id" :isFirstHotComment="index===0"
                  :commentItem="item"></CommentItem>
     <div class="lasted-comment">最新评论</div>
     <CommentItem v-for="(item,index) in lastedCommentList" :key="item.id" :isLastComment="index===0"
                  :commentItem="item"></CommentItem>
-
+  </div>
+  <div class="var-elevation--0 reply">
+    <var-input placeholder="想说点什么" v-model="reply" class="reply-input">
+      <template #append-icon>
+        <var-icon name="check" @click="sendReply"/>
+      </template>
+    </var-input>
   </div>
 
 </template>
@@ -47,6 +51,7 @@ export default {
     const route = useRoute()
     const lastedCommentList = ref([])
     const hotestCommentList = ref([])
+    const reply = ref("")
     const newsId = route.params.newsId
     console.log("加载CommentList")
 
@@ -74,10 +79,15 @@ export default {
     const goBack = () => {
       router.back()
     }
+    const sendReply = ()=>{
+
+    }
 
 
     return {
       goBack,
+      sendReply,
+      reply,
       lastedCommentList,
       hotestCommentList,
 
@@ -97,6 +107,20 @@ export default {
   font-size: 16px;
 }
 .container{
-  padding: 10px 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 30px;
+  background: #fafafa;
+
 }
+.reply{
+  background: white;
+  width: 100%;
+  position: fixed;
+  padding-bottom: 10px;
+  bottom: 0;
+  border-top:thick solid #666666 ;
+  border-top-width: 1px;
+}
+
 </style>
