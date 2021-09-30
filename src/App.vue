@@ -56,6 +56,11 @@ export default {
 
     }
   },
+  mounted() {
+    // window.open("https://www.baidu.com")
+    // window.location.assign("https://www.baidu.com")
+    // window.location.href = "https://www.baidu.com"
+  }
 }
 </script>
 

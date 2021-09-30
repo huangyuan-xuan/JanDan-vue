@@ -6,14 +6,19 @@ import {createRouter, createWebHashHistory} from "vue-router";
 // const Boring =()=>import('../page/boring/Boring.vue')
 // const Girls =()=>import('../page/girls/Girls.vue')
 const PreviewImageList = ()=> import('../page/PreviewImageList.vue')
-
+const NewsDetail = ()=> import('../page/news/NewsDetail.vue')
 
 const routes =[
     {
         path:'/preview-image-list',
         component:PreviewImageList,
         name:'previewImage'
-    }
+    },
+    {
+        path:'/news-detail',
+        component:NewsDetail,
+        name:'newsDetail'
+    },
 
     // {path:'/', redirect:'/news'},
     // {path:'/news',component:News},

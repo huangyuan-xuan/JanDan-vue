@@ -8,9 +8,7 @@
         :error="error"
         :loading="loading"
         @load="loadMore">
-        <NewsItem v-for="(item,index) in news" :news="item" :key="index" :last-one="index===news.length-1"></NewsItem>
-
-
+        <NewsItem v-for="(item,index) in news" :news="item" :key="index" :last-one="index===news.length-1" @click="toDetail(item)"></NewsItem>
     </var-list>
   </var-pull-refresh>
 
@@ -55,6 +53,7 @@ export default {
       }
       const res = await NewsService.getNewsList(this.pageNumber)
       if (res.status === 'ok') {
+        console.log("新鲜事",res)
         if (this.pageNumber === 1) {
           this.news = res.posts
         } else {
@@ -76,6 +75,17 @@ export default {
     },
     refresh() {
       this.loadNewsList(false)
+    },
+    toDetail(item){
+      console.log("详情")
+      this.$router.push({
+        name:"newsDetail",
+        params:{
+          imgUrl:item.custom_fields.thumb_c[0],
+          excerpt:item.excerpt,
+          detailUrl:item.url
+        }
+      })
     }
   }
 
