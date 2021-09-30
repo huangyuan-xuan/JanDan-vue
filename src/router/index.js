@@ -3,6 +3,7 @@ import {createRouter, createWebHashHistory} from "vue-router";
 const PreviewImageList = () => import('../page/PreviewImageList.vue')
 const NewsDetail = () => import('../page/news/NewsDetail.vue')
 const Home = () => import('../page/Home.vue')
+const NewsCommentList = () => import('../page/news/CommentList')
 const routes = [
     {
         path: '/',
@@ -19,6 +20,11 @@ const routes = [
         path: '/news-detail',
         component: NewsDetail,
         name: 'newsDetail'
+    },
+    {
+        path: '/news-comment-list',
+        component: NewsCommentList,
+        name: 'newsCommentList'
     },
 
 ]

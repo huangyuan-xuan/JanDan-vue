@@ -23,5 +23,17 @@ const getNewsDetail = (newsId)=>{
         method :'GET'
     })
 }
+const getNewsCommentList = (newsId)=>{
+    return request({
+        url:'/news_api/',
+        method:'GET',
+        params:{
+            oxwlxojflwblxbsapi:'get_post',
+            id:newsId,
+            include:'comments'
 
-export default {getNewsList,getNewsDetail}
+        }
+    })
+}
+
+export default {getNewsList,getNewsDetail,getNewsCommentList}

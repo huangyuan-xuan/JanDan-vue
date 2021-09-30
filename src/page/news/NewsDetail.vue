@@ -25,8 +25,8 @@
   </div>
   <var-popup position="bottom" v-model:show="showMoreActionPopup">
     <div class="block">
-        <var-cell icon="heart" title="收藏" @click="collect"/>
-        <var-cell icon="fire" title="分享" @click="share"/>
+      <var-cell icon="heart" title="收藏" @click="collect"/>
+      <var-cell icon="fire" title="分享" @click="share"/>
     </div>
   </var-popup>
 </template>
@@ -44,7 +44,7 @@ export default {
 
   data() {
     return {
-      showMoreActionPopup:false,
+      showMoreActionPopup: false,
       imgUrl: "",
       excerpt: "",
       title: "",
@@ -84,22 +84,27 @@ export default {
     showActionDialog() {
       this.showMoreActionPopup = true
     },
-    collect(){
+    collect() {
       this.showMoreActionPopup = false
       Snackbar({
-        content:"点击收藏，但是作者并没有实现该功能",
+        content: "点击收藏，但是作者并没有实现该功能",
         position: 'bottom'
       })
     },
-    share(){
+    share() {
       this.showMoreActionPopup = false
       Snackbar({
-        content:"点击收藏，但是作者并没有实现该功能",
+        content: "点击收藏，但是作者并没有实现该功能",
         position: 'bottom'
       })
     },
     gotoCommentList() {
-
+      this.$router.push({
+        name:'newsCommentList',
+        params:{
+          newsId:this.newsId
+        }
+      })
     }
   }
 }
