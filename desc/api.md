@@ -4,7 +4,7 @@
 
 * 详情
 
-  * ![](desc/news_detail_pic.jpg)
+  * ![](news_detail_pic.jpg)
 
   * 接口：https://i.jandan.net/?oxwlxojflwblxbsapi=get_post&id=109648&include=content,date,modified
 
@@ -74,7 +74,7 @@
       }
       ```
 
-    * ![](desc/news_comment.jpg)
+    * ![](news_comment.jpg)
 
 ### 随手拍
 

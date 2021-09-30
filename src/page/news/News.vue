@@ -20,6 +20,7 @@
 
 import NewsItem from "./NewsItem";
 import NewsService from '../../service/news'
+import TimeUtils from '@/utils/time.js'
 
 export default {
   name: "News",
@@ -83,7 +84,10 @@ export default {
         params:{
           imgUrl:item.custom_fields.thumb_c[0],
           excerpt:item.excerpt,
-          detailUrl:item.url
+          newsId:item.id,
+          title:item.title,
+          author:item.author.name,
+          time:TimeUtils.formatTime(item.date)
         }
       })
     }

@@ -12,9 +12,14 @@ const getNewsList = (pageNumber)=>{
     })
 }
 
-const getNewsDetail = (detailUrl)=>{
+const getNewsDetail = (newsId)=>{
     return request({
-        url:detailUrl,
+        url:"/news_api/",
+        params:{
+            id:newsId,
+            include:'content,date,modified',
+            oxwlxojflwblxbsapi:'get_post'
+        },
         method :'GET'
     })
 }
