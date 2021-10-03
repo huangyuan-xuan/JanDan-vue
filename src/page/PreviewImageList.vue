@@ -19,6 +19,7 @@ export default {
     }
   },
   mounted() {
+    console.log("开始预览图片")
     const route = useRoute()
     this.previewImageList = route.params.imageList
     this.showPreview = true
@@ -28,6 +29,7 @@ export default {
 
     handleCloseEvent: function () {
       // const router = useRouter()
+      console.log("预览图片返回")
       this.$router.back()
 
     }

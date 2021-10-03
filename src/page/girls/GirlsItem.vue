@@ -1,9 +1,15 @@
 <template>
   <div class="var-elevation--3">
-    <div>
+    <div class="author">
+      {{ item.author }}
+    </div>
+    <div class="time">
+      {{ getFormatTime }}
+    </div>
+    <div class="content">
       {{ getContent }}
     </div>
-    <var-image class="news-img" :src="item.images[0].url" :error=logo @click="showImagePreview" lazy/>
+    <var-image class="girls-img" :src="item.images[0].url" :error=logo @click="showImagePreview" lazy/>
     <div class="footer-row">
       <div @click="votePositive">OO[{{ getVotePositive }}]</div>
       <div @click="voteNegative">XX[{{ getVoteNegative }}]</div>
@@ -32,7 +38,7 @@
 import logo from '../../assets/images/image_load_fail.svg'
 import GirlsService from "../../service/girls"
 import {Snackbar} from "@varlet/ui";
-
+import TimeUtil from '@/utils/time.js'
 
 
 export default {
@@ -93,6 +99,9 @@ export default {
         return 0
       }
     },
+    getFormatTime:function (){
+      return TimeUtil.formatTime(this.item.date)
+    }
   },
   methods:{
     showImagePreview(){
@@ -194,6 +203,24 @@ export default {
 </script>
 
 <style scoped>
+.time{
+  margin-top: 6px;
+  font-size: 14px;
+  color: #999999;
+}
+.author{
+  font-size: 18px;
+  color: #333333;
+}
+.content{
+  margin-top: 6px;
+  font-size: 16px;
+  color: #444444;
+}
+.girls-img{
+  margin-top: 6px;
+}
+
 .var-elevation--3 {
   padding: 10px;
   margin: 6px;

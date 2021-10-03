@@ -1,5 +1,5 @@
 const formatTime =(timeStr)=>{
-    let date = new Date(timeStr.replace(/-/g, '/'));
+    let date = new Date(timeStr);
     let postTimeStamp = date.getTime();
     let currentTime = new Date().getTime();
     let diff = currentTime - postTimeStamp;

@@ -8,7 +8,7 @@
         :finished="hasMore"
         :loading="loading"
         @load="loadMore">
-      <BoringItem v-for="item in boringList" :key="item.id" :item="item" ></BoringItem>
+      <BoringItem v-for="item in boringList" :key="item.id" :item="item"></BoringItem>
     </var-list>
   </var-pull-refresh>
 

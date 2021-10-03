@@ -17,18 +17,18 @@
     <hr/>
     <div class="detail" v-html="detail"></div>
     <div class="var-elevation--2 bottom-area">
-      <img :src="backIcon" @click="goBack" class="back"/>
-      <img :src="commentIcon" @click="gotoCommentList" class="comment-list"/>
-      <img :src="moreIcon" @click="showActionDialog" class="more-icon"/>
+      <img :src="backIcon" @click="goBack" class="back" alt=""/>
+      <img :src="commentIcon" @click="gotoCommentList" class="comment-list" alt=""/>
+      <img :src="moreIcon" @click="showActionDialog" class="more-icon" alt=""/>
     </div>
-
+    <var-popup position="bottom" v-model:show="showMoreActionPopup">
+      <div class="block">
+        <var-cell icon="heart" title="收藏" @click="collect"/>
+        <var-cell icon="fire" title="分享" @click="share"/>
+      </div>
+    </var-popup>
   </div>
-  <var-popup position="bottom" v-model:show="showMoreActionPopup">
-    <div class="block">
-      <var-cell icon="heart" title="收藏" @click="collect"/>
-      <var-cell icon="fire" title="分享" @click="share"/>
-    </div>
-  </var-popup>
+
 </template>
 
 <script>
@@ -119,7 +119,9 @@ hr {
 
 .container {
   background: #fafafa;
+  width: 100%;
 }
+
 
 .top-img {
   width: 100%;
@@ -159,6 +161,7 @@ hr {
   padding-left: 15px;
   padding-right: 15px;
   padding-bottom: 40px;
+  display: inline-block;
 }
 
 .bottom-area {

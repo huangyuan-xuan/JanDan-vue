@@ -54,7 +54,6 @@ export default {
       }
       const res = await NewsService.getNewsList(this.pageNumber)
       if (res.status === 'ok') {
-        console.log("新鲜事",res)
         if (this.pageNumber === 1) {
           this.news = res.posts
         } else {

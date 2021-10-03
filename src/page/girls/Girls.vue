@@ -53,6 +53,7 @@ export default {
         result = await GirlsService.getGirlsDefault()
         this.girlsList = result.data
       }
+      console.log("妹子图",this.girlsList)
       this.finishedText = "到底了"
       this.loading = false
       this.isRefresh = false

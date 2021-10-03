@@ -1,10 +1,16 @@
 <template>
 
   <div class="var-elevation--3">
-    <div>
+    <div class="author">
+      {{ item.author }}
+    </div>
+    <div class="time">
+      {{ getFormatTime }}
+    </div>
+    <div class="content">
       {{ getContent }}
     </div>
-    <var-image class="news-img" :src="item.images[0].url" :error=logo @click="showImagePreview" fit="contain" lazy/>
+    <var-image class="boring-img" :src="item.images[0].url" :error=logo @click="showImagePreview" fit="contain" lazy/>
     <div class="footer-row">
       <div @click="votePositive">OO[{{ getVotePositive }}]</div>
       <div @click="voteNegative">XX[{{ getVoteNegative }}]</div>
@@ -35,6 +41,7 @@
 import logo from '../../assets/images/image_load_fail.svg'
 import BoringService from '../../service/boring'
 import {Snackbar} from "@varlet/ui";
+import TimeUtil from '@/utils/time.js'
 
 export default {
   name: "BoringItem",
@@ -57,6 +64,11 @@ export default {
     }
   },
   computed: {
+
+    getFormatTime:function (){
+      return TimeUtil.formatTime(this.item.date)
+    },
+
     getContent: function () {
       return this.item.content.replaceAll("#img#", "")
     },
@@ -157,7 +169,7 @@ export default {
           return;
         }
 
-        let emailReg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+        let emailReg = /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
 
         if (!emailReg.test(this.commentEmail)) {
           Snackbar.error({
@@ -190,8 +202,7 @@ export default {
         this.snackbarContent = content
         this.showSnackbar = true
       }
-    }
-
+    },
   }
 
 }
@@ -201,6 +212,23 @@ export default {
 .var-elevation--3 {
   padding: 10px;
   margin: 6px;
+}
+.time{
+  margin-top: 6px;
+  font-size: 14px;
+  color: #999999;
+}
+.author{
+  font-size: 18px;
+  color: #333333;
+}
+.content{
+  margin-top: 6px;
+  font-size: 16px;
+  color: #444444;
+}
+.boring-img{
+  margin-top: 6px;
 }
 
 .footer-row {

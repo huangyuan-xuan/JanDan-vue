@@ -1,7 +1,19 @@
+
+const development = {
+    outputDir: 'dist/',
+    assetsDir: 'static/vue/vue_mall',
+    indexPath: 'templates/index.html',
+    publicPath: '/',
+};
+
 module.exports = {
+
     outputDir: 'dist',   //build输出目录
     assetsDir: 'assets', //静态资源目录（js, css, img）
     lintOnSave: true, //是否开启eslint
+    configureWebpack: {
+        devtool: 'source-map',
+    },
     devServer: {
         open: true, //是否自动弹出浏览器页面
         host: "localhost",
